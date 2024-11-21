@@ -12,6 +12,9 @@ class TestAuthentication(TestCase):
         self.clientUser = Userk.objects.create_user(username='clientUser', password='testpassword', is_client=True)
         self.freelancerUser = Userk.objects.create_user(username='freelancerUser', password='testpassword', is_freelancer=True)
 
+        country = Country.objects.create(name='Test Country', code='TC')
+        city = City.objects.create(name='Test City', country=country)
+
         # Crear instancias de Client y Freelancer asociadas a los usuarios
         self.testClientInstance = Client.objects.create(
             user=self.clientUser,
@@ -20,8 +23,8 @@ class TestAuthentication(TestCase):
             companyName='TestCompany',
             typeOfCompany='Software',
             businessVertical='IT',
-            countryOfLocation='Colombia',
-            city='Bogotá',
+            country=country,
+            city=city,
             address='Av. El Dorado',
         )
 

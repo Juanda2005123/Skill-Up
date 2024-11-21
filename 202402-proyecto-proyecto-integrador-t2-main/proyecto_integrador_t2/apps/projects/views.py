@@ -536,6 +536,8 @@ def informationProject(request, pk):
 @allowed_users(allowed_roles=['freelancer'])
 def addDeliverablesProject(request, pk):
     projectContributor = ProjectContributor.objects.get(id=pk)
+
+
     if projectContributor.approval_status == "pending" or projectContributor.approval_status == "rejected":
         client = projectContributor.project.client
         img = client.profile_pic
@@ -545,17 +547,27 @@ def addDeliverablesProject(request, pk):
         milestones = projectContributor.milestones.all()
 
         form = MilestoneForm()
-        if request.htmx:
-            form = MilestoneForm(request.POST)
-            if form.is_valid():
+        if request.method == 'POST':  # Cambiar a POST
+            form = MilestoneForm(request.POST)  # Crear el formulario con los datos del POST
+            if form.is_valid():  # Si el formulario es válido
                 milestone = form.save(commit=False)
-                milestone.projectContributor = projectContributor
-                milestone.save()
+                milestone.projectContributor = projectContributor  # Asignar el ProjectContributor
+                milestone.save()  # Guardar el nuevo milestone
+                
+                # Volver a cargar los milestones actualizados
+                milestones = projectContributor.milestones.all()
 
+                # Volver a renderizar la página con los datos actualizados
                 context = {
-                    'milestone' : milestone,
+                    'projectContributor': projectContributor,
+                    'skills': skills,
+                    'img': img,
+                    'totalProjects': totalProjects,
+                    'skills': skills,
+                    'form': form,
+                    'milestones': milestones,
                 }
-                return render(request, 'projects/freelancer/partials/milestone.html', context)
+                return render(request, 'projects/freelancer/addDeliverablesProject.html', context)
 
 
         context = {

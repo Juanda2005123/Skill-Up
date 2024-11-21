@@ -11,8 +11,6 @@
     <link type='text/css' href="{% static 'projects/css/informationProject.css' %}" rel='stylesheet'/>
     <!-- JS LISTFREELANCER PROJECT -->
     <script type="text/javascript" src="{% static 'projects/js/deliverablesJs.js' %}" defer></script>
-    <script src="https://unpkg.com/htmx.org"></script>
-    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -55,19 +53,12 @@
                 <!-- Cambiar esto en el HTML -->
                 <div class="add-milestone-section">
                     <h2>{% trans "Add Milestone" %}</h2>
-                    <form hx-ext="ws" 
-                        ws-connect="/ws/milestones/{{ projectContributor.id }}" 
-                        ws-send="name" 
-                        _="on htmx:wsAfterSend reset() me"
-                        class="milestone-form"> <!-- Añadida esta clase -->
-                        
+                    <form method="post" class="milestone-form">  <!-- Método POST en lugar de htmx -->
                         {% csrf_token %}
-                        
                         <div class="mb-3">
                             <label for="id_name" class="form-label">{% trans "Milestone Name" %}</label>
-                            {{ form.name }}
+                            {{ form.name }}  <!-- El campo para el nombre del milestone -->
                         </div>
-                        
                         <button id="add-milestone-button" type="submit" class="apply-button btn-primary">
                             <span>{% trans "Add Milestone" %}</span>
                         </button>

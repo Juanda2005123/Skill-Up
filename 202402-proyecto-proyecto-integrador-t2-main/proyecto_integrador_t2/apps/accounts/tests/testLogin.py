@@ -25,7 +25,11 @@ class LoginTests(TestCase):
         self.client_user.is_freelancer = False
         self.client_user.save()
         
-        self.client_profile = Client.objects.create(user=self.client_user)
+        self.client_profile = Client.objects.create(
+            user=self.client_user,
+            phoneNumber='123456789',
+            taxId='12345546'
+        )
         
         # Crear un freelancer
         self.freelancer_user = Userk.objects.create_user(
@@ -38,7 +42,11 @@ class LoginTests(TestCase):
         self.freelancer_user.is_client = False
         self.freelancer_user.save()
         
-        self.freelancer_profile = Freelancer.objects.create(user=self.freelancer_user)
+        self.freelancer_profile = Freelancer.objects.create(
+            user=self.freelancer_user,
+            identification="1231221",
+            phoneNumber='123456789'
+        )
         
         # URL de inicio de sesión
         self.login_url = reverse('login')

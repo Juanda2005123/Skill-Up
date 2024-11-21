@@ -1,4 +1,8 @@
-# Diseño de los casos de prueba 
+Aquí tienes el documento completo con todos los casos de prueba en formato Markdown, incluyendo los escenarios Gherkin que compartiste. Se han comparado y agregado los casos que no estaban previamente documentados para evitar repeticiones.
+
+---
+
+# Diseño de los casos de prueba
 
 ## Funcionalidades que van a ser probadas con Selenium
 
@@ -10,6 +14,9 @@
 - Navegación y visualización de proyectos
 - Creación de chat entre clientes y freelancers
 - Manejo de errores en el registro
+- Notificaciones de proyectos y chats
+
+---
 
 ## Casos de Prueba que serán realizados con Selenium
 
@@ -25,292 +32,183 @@
 - **Pasos**:
   1. Iniciar sesión como freelancer.
   2. Navegar a la página "Browse Projects".
-  3. Seleccionar el primer proyecto de la lista.
+  3. Seleccionar el segundo proyecto de la lista.
   4. Hacer clic en el botón "Apply Project".
+  5. Cerrar sesión.
+  6. Iniciar sesión como cliente.
+  7. Navegar a la página de "Notifications".
 - **Resultado Esperado**:
-  - El sistema confirma que la postulación fue exitosa.
+  - El cliente recibe una notificación indicando que un freelancer ha aplicado al proyecto.
 
-#### Caso de Prueba 2: Navegar y Visualizar Proyectos
-- **Descripción**: Verificar que un freelancer puede navegar y ver la información de varios proyectos.
+#### Caso de Prueba 2: Cliente Rechaza la Postulación
+- **Descripción**: Verificar que un cliente puede rechazar la postulación de un freelancer.
 - **Precondiciones**: 
-  - El freelancer debe estar registrado y autenticado.
-  - Deben existir proyectos en la plataforma.
-- **Pasos**:
-  1. Iniciar sesión como freelancer.
-  2. Navegar a la página "Browse Projects".
-  3. Seleccionar el primer proyecto y verificar la información.
-  4. Regresar a la lista de proyectos y seleccionar el segundo proyecto.
-- **Resultado Esperado**:
-  - Se muestra la información detallada de ambos proyectos al navegar.
-
----
-
-### Escenario: Creación de Chat
-
-#### Caso de Prueba 1: Listar Freelancers para Crear un Chat
-- **Descripción**: Verificar que un cliente puede listar freelancers asociados a un proyecto para iniciar un chat.
-- **Precondiciones**:
-  - El cliente debe estar autenticado.
-  - Debe haber freelancers asociados a los proyectos del cliente.
+  - El freelancer debe haber aplicado a un proyecto.
 - **Pasos**:
   1. Iniciar sesión como cliente.
-  2. Navegar a "My Projects".
-  3. Seleccionar un proyecto.
+  2. Navegar a la página de "Notifications".
+  3. Leer la notificación de postulación.
+  4. Rechazar la postulación.
+  5. Cerrar sesión.
+  6. Iniciar sesión como freelancer.
+  7. Navegar a "Notifications".
 - **Resultado Esperado**:
-  - Se muestra la información del proyecto y la lista de freelancers asociados.
+  - El freelancer recibe una notificación de que su postulación fue rechazada.
 
 ---
 
-### Escenario: Creación de Proyectos
+### Escenario: Notificaciones de Proyectos y Propuestas
 
-#### Caso de Prueba 1: Creación Exitosa de Proyecto
-- **Descripción**: Verificar que un cliente puede crear un proyecto proporcionando datos válidos.
+#### Caso de Prueba 1: Enviar Propuesta con Entregables
+- **Descripción**: Verificar que un freelancer puede enviar una propuesta con entregables, y el cliente recibe la notificación.
 - **Precondiciones**:
-  - El cliente debe estar registrado y autenticado.
+  - El freelancer debe estar registrado y autenticado.
+  - Debe existir un proyecto activo.
+- **Pasos**:
+  1. Iniciar sesión como freelancer.
+  2. Navegar a la página de "Notifications".
+  3. Seleccionar una notificación.
+  4. Llenar los hitos del proyecto.
+  5. Cerrar sesión.
+  6. Iniciar sesión como cliente.
+  7. Navegar a la página de "Notifications".
+- **Resultado Esperado**:
+  - El cliente recibe una notificación con la propuesta enviada.
+
+#### Caso de Prueba 2: Cliente Rechaza la Propuesta
+- **Descripción**: Verificar que un cliente puede rechazar la propuesta de un freelancer.
+- **Precondiciones**:
+  - El freelancer debe haber enviado una propuesta.
 - **Pasos**:
   1. Iniciar sesión como cliente.
-  2. Navegar a la página "My Projects".
-  3. Hacer clic en "Create Project".
-  4. Llenar el formulario con datos válidos.
-  5. Confirmar la creación del proyecto.
+  2. Navegar a la página de "Notifications".
+  3. Leer la notificación de propuesta.
+  4. Rechazar la propuesta.
+  5. Cerrar sesión.
+  6. Iniciar sesión como freelancer.
+  7. Navegar a "Notifications".
 - **Resultado Esperado**:
-  - El proyecto aparece listado en la sección "My Projects".
+  - El freelancer recibe una notificación indicando que la propuesta fue rechazada.
 
----
-
-### Escenario: Navegar por Proyectos
-
-#### Caso de Prueba 1: Navegar al Primer Proyecto
-- **Descripción**: Verificar que un freelancer puede acceder a la información del primer proyecto listado en la página de "Browse Projects".
+#### Caso de Prueba 3: Cliente Aprueba la Propuesta
+- **Descripción**: Verificar que un cliente puede aprobar la propuesta de un freelancer.
 - **Precondiciones**:
-  - El freelancer debe estar registrado y autenticado.
-  - Deben existir proyectos disponibles en la página "Browse Projects".
+  - El freelancer debe haber enviado una propuesta.
 - **Pasos**:
-  1. Iniciar sesión como freelancer.
-  2. Navegar a la página "Browse Projects".
-  3. Hacer clic en el primer proyecto listado.
+  1. Iniciar sesión como cliente.
+  2. Navegar a la página de "Notifications".
+  3. Leer la notificación de propuesta.
+  4. Aprobar la propuesta.
+  5. Cerrar sesión.
+  6. Iniciar sesión como freelancer.
+  7. Navegar a "Notifications".
 - **Resultado Esperado**:
-  - Se muestra la información detallada del primer proyecto.
-
----
-
-#### Caso de Prueba 2: Navegar por Múltiples Proyectos
-- **Descripción**: Verificar que un freelancer puede acceder a la información de varios proyectos navegando entre ellos.
-- **Precondiciones**:
-  - El freelancer debe estar registrado y autenticado.
-  - Deben existir al menos dos proyectos disponibles en la página "Browse Projects".
-- **Pasos**:
-  1. Iniciar sesión como freelancer.
-  2. Navegar a la página "Browse Projects".
-  3. Hacer clic en el primer proyecto listado.
-  4. Verificar que se muestra la información del primer proyecto.
-  5. Regresar a la página "Browse Projects".
-  6. Hacer clic en el segundo proyecto listado.
-- **Resultado Esperado**:
-  - Se muestra la información detallada del segundo proyecto.
+  - El freelancer recibe una notificación indicando que la propuesta fue aprobada.
 
 ---
 
 ### Escenario: Inicio de Sesión (Login)
 
-#### Caso de Prueba 1: Inicio de Sesión Exitoso con Credenciales Válidas
-- **Descripción**: Verificar que un usuario (cliente o freelancer) puede iniciar sesión exitosamente.
+#### Caso de Prueba 1: Inicio de Sesión Exitoso
+- **Descripción**: Verificar que un usuario puede iniciar sesión con credenciales válidas.
 - **Precondiciones**:
   - El usuario debe estar registrado.
 - **Pasos**:
   1. Navegar a la página de inicio de sesión.
-  2. Ingresar un nombre de usuario y contraseña válidos.
+  2. Ingresar credenciales válidas.
   3. Hacer clic en "Login".
 - **Resultado Esperado**:
-  - El usuario es redirigido al dashboard correspondiente.
+  - El usuario es redirigido al dashboard.
 
-#### Caso de Prueba 2: Inicio de Sesión Fallido con Credenciales Inválidas
-- **Descripción**: Verificar que el sistema no permite el inicio de sesión con credenciales incorrectas.
+#### Caso de Prueba 2: Inicio de Sesión Fallido por Credenciales Inválidas
+- **Descripción**: Verificar que no se permite el inicio de sesión con credenciales incorrectas.
 - **Precondiciones**: Ninguna.
 - **Pasos**:
   1. Navegar a la página de inicio de sesión.
-  2. Ingresar un nombre de usuario y contraseña inválidos.
+  2. Ingresar credenciales inválidas.
   3. Hacer clic en "Login".
 - **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando que las credenciales son incorrectas.
-
-#### Caso de Prueba 3: Inicio de Sesión Fallido con Campos Vacíos
-- **Descripción**: Verificar que el sistema no permite el inicio de sesión si los campos están vacíos.
-- **Precondiciones**: Ninguna.
-- **Pasos**:
-  1. Navegar a la página de inicio de sesión.
-  2. Dejar los campos vacíos y hacer clic en "Login".
-- **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando que los campos son obligatorios.
-
-#### Caso de Prueba 4: Inicio de Sesión Exitoso como Cliente Específico
-- **Descripción**: Verificar que un cliente específico puede iniciar sesión con sus credenciales válidas.
-- **Precondiciones**:
-  - El cliente debe estar registrado.
-- **Pasos**:
-  1. Navegar a la página de inicio de sesión.
-  2. Ingresar el nombre de usuario "juanperez123" y la contraseña "TestPassword123".
-  3. Hacer clic en "Login".
-- **Resultado Esperado**:
-  - El cliente es redirigido a su dashboard.
-
-#### Caso de Prueba 5: Inicio de Sesión Exitoso como Freelancer
-- **Descripción**: Verificar que un freelancer puede iniciar sesión con sus credenciales válidas.
-- **Precondiciones**:
-  - El freelancer debe estar registrado.
-- **Pasos**:
-  1. Navegar a la página de inicio de sesión.
-  2. Ingresar el nombre de usuario "juanQuintero" y la contraseña "TestPassword123".
-  3. Hacer clic en "Login".
-- **Resultado Esperado**:
-  - El freelancer es redirigido a su dashboard.
+  - Aparece un mensaje de error indicando credenciales incorrectas.
 
 ---
 
-### Escenario: Registro de Cliente
+### Escenario: Registro de Usuarios
 
-#### Caso de Prueba 1: Registro Exitoso con Datos Válidos
-- **Descripción**: Verificar que un cliente puede registrarse exitosamente con datos válidos.
+#### Caso de Prueba 1: Registro de Cliente con Datos Válidos
+- **Descripción**: Verificar que un cliente puede registrarse correctamente.
 - **Precondiciones**: Ninguna.
 - **Pasos**:
   1. Navegar a la página de registro.
-  2. Seleccionar la opción "Register as Client".
-  3. Llenar todos los campos obligatorios con datos válidos.
+  2. Seleccionar "Register as Client".
+  3. Completar los campos obligatorios.
   4. Confirmar el registro.
 - **Resultado Esperado**:
   - El cliente es redirigido a la página de inicio de sesión.
 
-#### Caso de Prueba 2: Registro Fallido por Formato Inválido
-- **Descripción**: Verificar que el sistema no permite registrar un cliente con datos inválidos (por ejemplo, correo o teléfono en formato incorrecto).
+#### Caso de Prueba 2: Registro Fallido por Campos Vacíos
+- **Descripción**: Verificar que no se permite el registro con campos vacíos.
 - **Precondiciones**: Ninguna.
 - **Pasos**:
   1. Navegar a la página de registro.
-  2. Seleccionar la opción "Register as Client".
-  3. Llenar los campos con datos inválidos (ej. correo con formato incorrecto).
-  4. Intentar confirmar el registro.
+  2. Seleccionar "Register as Client".
+  3. Dejar campos obligatorios vacíos.
+  4. Intentar registrar.
 - **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando que los datos no son válidos.
+  - Aparece un mensaje de error indicando que los campos son obligatorios.
 
-#### Caso de Prueba 3: Registro Fallido por Contraseñas No Coincidentes
-- **Descripción**: Verificar que el sistema no permite registrar un cliente si las contraseñas no coinciden.
+#### Caso de Prueba 3: Registro de Freelancer con Datos Válidos
+- **Descripción**: Verificar que un freelancer puede registrarse correctamente.
 - **Precondiciones**: Ninguna.
 - **Pasos**:
   1. Navegar a la página de registro.
-  2. Seleccionar la opción "Register as Client".
-  3. Ingresar contraseñas que no coinciden.
-  4. Intentar confirmar el registro.
+  2. Seleccionar "Register as Freelancer".
+  3. Completar los campos obligatorios.
+  4. Confirmar el registro.
 - **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando que las contraseñas no coinciden.
-
-#### Caso de Prueba 4: Registro Fallido por Campos Vacíos
-- **Descripción**: Verificar que el sistema no permite registrar un cliente si hay campos obligatorios vacíos.
-- **Precondiciones**: Ninguna.
-- **Pasos**:
-  1. Navegar a la página de registro.
-  2. Seleccionar la opción "Register as Client".
-  3. Dejar uno o más campos obligatorios vacíos.
-  4. Intentar confirmar el registro.
-- **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando que los campos obligatorios deben llenarse.
+  - El freelancer es redirigido a la página de inicio de sesión.
 
 ---
 
-### Escenario: Registro de Freelancer
+### Escenario: Creación de Proyectos
 
-#### Caso de Prueba 1: Registro Exitoso con Credenciales Válidas
-- **Descripción**: Verificar que un freelancer puede registrarse correctamente con credenciales válidas.
+#### Caso de Prueba 1: Creación Exitosa
+- **Descripción**: Verificar que un cliente puede crear un proyecto con datos válidos.
 - **Precondiciones**:
-  - El usuario debe estar en la página de aterrizaje.
-  - No debe existir un usuario con las mismas credenciales.
+  - El cliente debe estar autenticado.
 - **Pasos**:
-  1. Hacer clic en el botón "Register" en la página de aterrizaje.
-  2. Seleccionar la opción "Register as Freelancer".
-  3. Completar los campos requeridos con datos válidos.
-  4. Enviar el formulario.
+  1. Iniciar sesión como cliente.
+  2. Navegar a "My Projects".
+  3. Hacer clic en "Create Project".
+  4. Completar el formulario con datos válidos.
 - **Resultado Esperado**:
-  - El usuario es redirigido a la página de inicio de sesión.
+  - El proyecto aparece listado en "My Projects".
+
+#### Caso de Prueba 2: Creación Fallida por Campos Vacíos
+- **Descripción**: Verificar que no se permite crear un proyecto con campos vacíos.
+- **Precondiciones**:
+  - El cliente debe estar autenticado.
+- **Pasos**:
+  1. Iniciar sesión como cliente.
+  2. Navegar a "My Projects".
+  3. Hacer clic en "Create Project".
+  4. Completar algunos campos y dejar otros vacíos.
+  5. Intentar guardar.
+- **Resultado Esperado**:
+  - Aparece un mensaje de error indicando que los campos son obligatorios.
 
 ---
 
-#### Caso de Prueba 2: Registro Fallido por Usuario ya Existente
-- **Descripción**: Verificar que se muestra un mensaje de error al intentar registrar un usuario ya existente.
+### Escenario: Creación y Notificación de Chat
+
+#### Caso de Prueba 1: Cliente Inicia un Chat
+- **Descripción**: Verificar que un cliente puede iniciar un chat con un freelancer.
 - **Precondiciones**:
-  - El usuario debe estar en la página de aterrizaje.
-  - El usuario ya debe estar registrado.
+  - El cliente debe estar autenticado.
 - **Pasos**:
-  1. Hacer clic en el botón "Register" en la página de aterrizaje.
-  2. Seleccionar la opción "Register as Freelancer".
-  3. Completar los campos con datos de un usuario ya registrado.
-  4. Enviar el formulario.
-  5. Hacer clic en "Login" y autenticarse con las credenciales existentes.
+  1. Iniciar sesión como cliente.
+  2. Navegar a "Notifications".
+  3. Seleccionar una notificación de proyecto.
+  4. Iniciar un chat con un freelancer.
 - **Resultado Esperado**:
-  - El sistema muestra un mensaje de error y permite iniciar sesión con el usuario existente.
+  - Se crea un chat y aparece en la lista de mensajes.
 
----
-
-#### Caso de Prueba 3: Registro Fallido con Número de Teléfono Inválido
-- **Descripción**: Verificar que se muestra un mensaje de error al intentar registrar un usuario con un número de teléfono inválido.
-- **Precondiciones**:
-  - El usuario debe estar en la página de aterrizaje.
-- **Pasos**:
-  1. Hacer clic en el botón "Register" en la página de aterrizaje.
-  2. Seleccionar la opción "Register as Freelancer".
-  3. Completar los campos requeridos, ingresando un número de teléfono en un formato inválido.
-  4. Enviar el formulario.
-- **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando el formato incorrecto del número de teléfono.
-
----
-
-#### Caso de Prueba 4: Registro Fallido con Identificación Inválida
-- **Descripción**: Verificar que se muestra un mensaje de error al intentar registrar un usuario con un formato de identificación inválido.
-- **Precondiciones**:
-  - El usuario debe estar en la página de aterrizaje.
-- **Pasos**:
-  1. Hacer clic en el botón "Register" en la página de aterrizaje.
-  2. Seleccionar la opción "Register as Freelancer".
-  3. Completar los campos requeridos, ingresando un formato inválido en el campo de identificación.
-  4. Enviar el formulario.
-- **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando el formato incorrecto del campo de identificación.
-
----
-
-#### Caso de Prueba 5: Registro Fallido con Contraseñas que No Coinciden
-- **Descripción**: Verificar que se muestra un mensaje de error al intentar registrar un usuario con contraseñas que no coinciden.
-- **Precondiciones**:
-  - El usuario debe estar en la página de aterrizaje.
-- **Pasos**:
-  1. Hacer clic en el botón "Register" en la página de aterrizaje.
-  2. Seleccionar la opción "Register as Freelancer".
-  3. Completar los campos requeridos con contraseñas que no coincidan.
-  4. Enviar el formulario.
-- **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando que las contraseñas no coinciden.
-
----
-
-#### Caso de Prueba 6: Registro Fallido con Campos Vacíos
-- **Descripción**: Verificar que se muestra un mensaje de error al intentar registrar un usuario dejando campos requeridos vacíos.
-- **Precondiciones**:
-  - El usuario debe estar en la página de aterrizaje.
-- **Pasos**:
-  1. Hacer clic en el botón "Register" en la página de aterrizaje.
-  2. Seleccionar la opción "Register as Freelancer".
-  3. Intentar enviar el formulario dejando algunos campos vacíos.
-- **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando que los campos están vacíos.
-
----
-
-#### Caso de Prueba 7: Registro Fallido con Correo Electrónico Inválido
-- **Descripción**: Verificar que se muestra un mensaje de error al intentar registrar un usuario con un formato de correo electrónico inválido.
-- **Precondiciones**:
-  - El usuario debe estar en la página de aterrizaje.
-- **Pasos**:
-  1. Hacer clic en el botón "Register" en la página de aterrizaje.
-  2. Seleccionar la opción "Register as Freelancer".
-  3. Completar los campos requeridos, ingresando un correo electrónico en un formato inválido.
-  4. Enviar el formulario.
-- **Resultado Esperado**:
-  - Se muestra un mensaje de error indicando el formato incorrecto del correo electrónico.

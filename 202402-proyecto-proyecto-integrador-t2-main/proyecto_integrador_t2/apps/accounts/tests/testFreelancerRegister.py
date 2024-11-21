@@ -63,8 +63,8 @@ class FreelancerRegisterTests(TestCase):
         self.assertEqual(freelancer.user.first_name, self.valid_data['first_name'])
         self.assertEqual(freelancer.user.last_name, self.valid_data['last_name'])
         self.assertEqual(freelancer.user.email, self.valid_data['email'])
-        self.assertEqual(freelancer.phoneNumber, self.valid_data['phoneNumber'])
-        self.assertEqual(freelancer.identification, self.valid_data['identification'])
+        self.assertEqual(freelancer.phoneNumber, int(self.valid_data['phoneNumber']))
+        self.assertEqual(freelancer.identification, int(self.valid_data['identification']))
         self.assertTrue(freelancer.user.is_freelancer)
 
     def testFreelancerRegisterInvalidPasswordPost(self):

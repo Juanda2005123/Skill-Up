@@ -37,18 +37,15 @@ def clientMessage(request, chatName):
     chatMessages = chat.chatMessages.all().order_by('timeCreated')[:30]
     
     form = ChatMessageCreateForm()
-    if request.htmx:
+    if request.method == 'POST':
         form = ChatMessageCreateForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
             message.author = request.user
             message.chat = chat
             message.save()
-            context = {
-                'message': message,
-                'user' : request.user,
-            }
-            return render(request, 'communications/partials/chatMessage.html', context)
+            # Redirigir a la misma página para evitar reenvíos del formulario
+            return redirect('clientMessage', chatName=chatName)
 
     context = {
         'chat' : chat,
@@ -111,33 +108,35 @@ def freelancerMessageHome(request):
 def freelancerMessage(request, chatName):
     latest_message = Message.objects.filter(chat=OuterRef('pk')).order_by('-timeCreated').values('timeCreated')[:1]
 
+    # Obtención de todos los chats asociados al freelancer
     chats = request.user.freelancer.chat.annotate(last_message_time=Subquery(latest_message)).order_by('-last_message_time')
 
-    chat = Chat.objects.get(chatName = chatName)
+    # Obtención del chat actual y sus mensajes
+    chat = Chat.objects.get(chatName=chatName)
     chatMessages = chat.chatMessages.all().order_by('timeCreated')[:30]
     lastMessage = chatMessages.first()
+
+    # Inicializar formulario
     form = ChatMessageCreateForm()
-    if request.htmx:
+
+    # Procesar envío del formulario mediante método POST
+    if request.method == "POST":
         form = ChatMessageCreateForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
-            print(message.body)
             message.author = request.user
             message.chat = chat
             message.save()
-            context = {
-                'message': message,
-                'user' : request.user,
-            }
-            return render(request, 'communications/partials/chatMessage.html', context)
+            # Recargar la lista de mensajes después de guardar
+            chatMessages = chat.chatMessages.all().order_by('timeCreated')[:30]
 
     context = {
-        'chat' : chat,
-        'chatMessages' : chatMessages,
+        'chat': chat,
+        'chatMessages': chatMessages,
         'chats': chats,
-        'form' : form,
-        'chatName' : chatName,
-        'lastMessage' : lastMessage
+        'form': form,
+        'chatName': chatName,
+        'lastMessage': lastMessage,
     }
     return render(request, 'communications/freelancerMessage.html', context)
 

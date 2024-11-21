@@ -1,8 +1,7 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client as TestClient
 from django.urls import reverse
-from apps.accounts.models import Userk
+from apps.accounts.models import Client as ClientModel, Country, City, Userk
 from apps.accounts.forms import SignUpFormFreelancer
-
 
 class testViews(TestCase):
     """
@@ -15,8 +14,30 @@ class testViews(TestCase):
         - Crea un cliente para simular solicitudes HTTP.
         - Crea un usuario de prueba con credenciales específicas.
         """
-        self.client = Client()
-        self.user = Userk.objects.create_user(username='testuser', password='password123')
+        self.test_client = TestClient()
+
+        country = Country.objects.create(name='Test Country', code='TC')
+        city = City.objects.create(name='Test City', country=country)
+
+        self.user = Userk.objects.create_user(
+            username='Testing', 
+            password='Papafritas123',
+            is_client=True,
+            first_name='Test',
+            last_name='Client'
+        )
+
+        ClientModel.objects.create(
+            user=self.user,
+            phoneNumber=1234567890,
+            taxId=9876543210,
+            companyName='Test Company',
+            typeOfCompany='Tech',
+            businessVertical='Technology',
+            country=country,
+            city=city,
+            address='Test Address'
+        )
 
     def test_login_view_GET(self):
         """
@@ -44,16 +65,16 @@ class testViews(TestCase):
     def test_login_view_POST(self):
         """
         Simula un intento de inicio de sesión con credenciales válidas.
-        - Verifica que el usuario sea redirigido a la vista correspondiente ('clientProject').
+        - Verifica que el usuario sea redirigido a la vista correspondiente ('dashboardClient').
         - Comprueba que la respuesta tenga un código de redirección 302.
         """
         response = self.client.post(reverse('login'), {
-            'username': 'c',
-            'password': 'client0105'
+            'username': 'Testing',
+            'password': 'Papafritas123'
         })
-        print(response.content)
+        
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('clientProject'))
+        self.assertRedirects(response, reverse('dashboardClient'))
     
     def test_signup_form_not_valid_data(self):
         """
@@ -88,7 +109,7 @@ class testViews(TestCase):
             'password1': 'EySiMrJohn095',
             'password2': 'EySiMrJohn095',
             'identification': '123456789',
-            'phoneNumber': '555-5555'
+            'phoneNumber': '5555555'
         })
         print("It should be valid")
         self.assertTrue(form.is_valid())

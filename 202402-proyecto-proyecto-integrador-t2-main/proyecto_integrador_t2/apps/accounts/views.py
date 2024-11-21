@@ -136,7 +136,6 @@ def landpage(request):
 def client_profile(request):
     client = request.user.client  # Esto agarra la información del cliente
     form = ClientForm(instance=client)  # Esto muestra el formulario ya con los datos del cliente
-    
     if request.method == 'POST':  # Si el cliente hace clic en "Actualizar"
         form = ClientForm(request.POST, request.FILES, instance=client)
         if form.is_valid():

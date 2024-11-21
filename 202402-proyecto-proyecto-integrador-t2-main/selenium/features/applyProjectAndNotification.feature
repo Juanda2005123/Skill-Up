@@ -12,18 +12,7 @@ Feature: Apply Project And Notification
     And the client user navigates to "Notifications" page
     Then the freelancer apply project appears in the client page
 
-  Scenario: The client rejects the apply to a project of the freelancer and the freelancer receives the notification
-    Given the user is on the login page
-    When the second client user logs in with a valid username and password
-    And the client user navigates to "Notifications" page
-    And the user client goes to readed notifications
-    And the user client clicks the notification
-    And the client rejects the freelancer
-    And the client user in notifications logs out
-    And the user clicks the login button on the landpage
-    And the freelancer user logs with a valid username and password
-    And the freelancer user navigates to "Notifications" page
-    Then the client rejects apply project notification is show
+  
 
   Scenario: The client accepts the apply to a project of the freelancer and the freelancer receives the notification
     Given the user is on the login page

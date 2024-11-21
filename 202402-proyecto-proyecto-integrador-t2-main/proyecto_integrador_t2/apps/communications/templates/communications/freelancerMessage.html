@@ -66,7 +66,7 @@
 
                     <!-- Formulario de mensaje -->
                     <div class="message-form border-top p-3">
-                        <form hx-ext="ws" ws-connect="/ws/chatroom/{{ chatName }}" ws-send="body" class="d-flex gap-2">
+                        <form method="POST" action="{% url 'freelancerMessage' chat.chatName %}" class="d-flex gap-2">
                             {% csrf_token %}
                             <div class="input-container flex-grow-1">
                                 {% render_field form.body class="form-control" placeholder="..." %}

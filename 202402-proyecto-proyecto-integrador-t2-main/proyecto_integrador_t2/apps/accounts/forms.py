@@ -151,7 +151,7 @@ class ClientForm(ModelForm):
     class Meta:
         model = Client
         fields = '__all__'
-        exclude = ['user', 'taxId', 'companyName', 'typeOfCompany', 'businessVertical', 'country', 'city', 'address'] 
+        exclude = ['user', 'taxId', 'companyName', 'typeOfCompany', 'businessVertical', 'country', 'city', 'address', 'phoneNumber'] 
 
 # forms.py
 
